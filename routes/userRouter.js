@@ -13,5 +13,3 @@ router.get('/refresh_token', userController.refreshToken);
 router.get('/infor', auth, userController.getUser);
 
 module.exports = router;
-
-//a
