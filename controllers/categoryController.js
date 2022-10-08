@@ -34,7 +34,7 @@ const categoryController = {
   updateCategory: async (req, res) => {
     try {
       const { name } = req.body;
-      await Category.findByIdAndUpdate({ _id: req.params.id }, { name });
+      await Category.findOneAndUpdate({ _id: req.params.id }, { name });
 
       res.json({ msg: 'update a category' });
     } catch (err) {
