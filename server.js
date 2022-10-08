@@ -18,6 +18,7 @@ app.use(
 app.use('/user', require('./routes/userRouter.js'));
 app.use('/api', require('./routes/categoryRouter.js'));
 app.use('/api', require('./routes/upload.js'));
+app.use('/api', require('./routes/productRouter.js'));
 
 const URI = process.env.MONGODB_URL;
 mongoose.connect(
