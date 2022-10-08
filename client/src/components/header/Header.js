@@ -1,5 +1,5 @@
 import { GlobalState } from "../../GlobalState";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const solutions = [
   {
@@ -34,7 +35,48 @@ function classNames(...classes) {
 }
 
 export default function Header() {
-  const value = useContext(GlobalState);
+  const state = useContext(GlobalState);
+  const [isLogged] = state.userAPI.isLogged;
+  const [isAdmin] = state.userAPI.isAdmin;
+  const [cart] = state.userAPI.cart;
+  const [menu, setMenu] = useState(false);
+
+  const logoutUser = async () => {
+    await axios.get("/user/logout");
+
+    localStorage.removeItem("firstLogin");
+
+    window.location.href = "/";
+  };
+
+  const adminRouter = () => {
+    return (
+      <>
+        <li>
+          <Link to="/create_product">Create Product</Link>
+        </li>
+        <li>
+          <Link to="/category">Categories</Link>
+        </li>
+      </>
+    );
+  };
+
+  const loggedRouter = () => {
+    return (
+      <>
+        <li>
+          <Link to="/history">History</Link>
+        </li>
+        <li>
+          <Link to="/" onClick={logoutUser}>
+            Logout
+          </Link>
+        </li>
+      </>
+    );
+  };
+
   return (
     <Popover className="relative bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -171,25 +213,25 @@ export default function Header() {
             </Popover>
           </Popover.Group>
           <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <Link
+            <a
               className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-              to="/login"
+              href="/login"
             >
               Sign in
-            </Link>
-            <Link
+            </a>
+            <a
               className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-              to="/register"
+              href="/register"
             >
               Sign up
-            </Link>
-            <Link className="inline-flex text--600 text-3xl" to="/cart">
+            </a>
+            <a className="inline-flex text--600 text-3xl" href="/cart">
               <ShoppingCartIcon
                 className="h-12 w-12 ml-10 hover:text-slate-700"
                 aria-hidden="true"
               />{" "}
-              10
-            </Link>
+              0
+            </a>
           </div>
         </div>
       </div>
