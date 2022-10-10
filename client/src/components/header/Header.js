@@ -26,6 +26,7 @@ export default function Header() {
   const [isLogged] = state.userAPI.isLogged;
   const [isAdmin] = state.userAPI.isAdmin;
   const [cart] = state.userAPI.cart;
+  const [user] = state.userAPI.user;
   const [menu, setMenu] = useState(false);
 
   const logoutUser = async () => {
@@ -133,22 +134,27 @@ export default function Header() {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {isLogged ? (
                   isAdmin ? (
-                    <h3 className="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium">
+                    <h3 className="bg-gray-900 text-white px-3  border-slate-600 border py-2 rounded-md text-xl font-medium">
                       Admin
                     </h3>
                   ) : (
-                    <Link
-                      to="/cart"
-                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white "
-                    >
-                      <ShoppingCartIcon
-                        className="h-10 w-10 inline-flex"
-                        aria-hidden="true"
-                      ></ShoppingCartIcon>
-                      <span className="text-red-400 text-2xl bg-slate-700 font-medium rounded">
-                        {cart.length}
-                      </span>
-                    </Link>
+                    <>
+                      <Link
+                        to="/cart"
+                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white "
+                      >
+                        <ShoppingCartIcon
+                          className="h-10 w-10 inline-flex"
+                          aria-hidden="true"
+                        ></ShoppingCartIcon>
+                        <span className="text-red-400 text-2xl px-2 bg-slate-700 font-medium rounded">
+                          {cart.length}
+                        </span>
+                      </Link>
+                      <h3 className="bg-gray-900 text-white px-3 border-slate-600 border py-2 ml-6 rounded-md text-xl font-medium">
+                        {user.name}
+                      </h3>
+                    </>
                   )
                 ) : (
                   <></>
