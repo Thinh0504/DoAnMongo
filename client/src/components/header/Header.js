@@ -1,33 +1,20 @@
 import { GlobalState } from "../../GlobalState";
 import { Fragment, useContext, useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
+import { Popover, Transition, Disclosure, Menu } from "@headlessui/react";
 import {
   Bars3Icon,
-  LifebuoyIcon,
   XMarkIcon,
   ShoppingCartIcon,
-  WalletIcon,
+  BellIcon,
 } from "@heroicons/react/24/outline";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const solutions = [
-  {
-    name: "All products",
-    description: "Get all products has in store",
-    href: "/",
-    icon: WalletIcon,
-  },
-];
-const resources = [
-  {
-    name: "Help Center",
-    description:
-      "Get all of your questions answered in our forums or contact support.",
-    href: "#",
-    icon: LifebuoyIcon,
-  },
+const navigation = [
+  { name: "Shop", href: "/", current: true },
+  { name: "Category", href: "/category", current: false },
+  { name: "Help", href: "#", current: false },
+  { name: "Calendar", href: "#", current: false },
 ];
 
 function classNames(...classes) {
@@ -52,12 +39,19 @@ export default function Header() {
   const adminRouter = () => {
     return (
       <>
-        <li>
-          <Link to="/create_product">Create Product</Link>
-        </li>
-        <li>
-          <Link to="/category">Categories</Link>
-        </li>
+        <Link
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          to="/create_product"
+        >
+          Add product
+        </Link>
+
+        <Link
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          to="/create_category"
+        >
+          Add category
+        </Link>
       </>
     );
   };
@@ -65,249 +59,207 @@ export default function Header() {
   const loggedRouter = () => {
     return (
       <>
-        <li>
-          <Link to="/history">History</Link>
-        </li>
-        <li>
-          <Link to="/" onClick={logoutUser}>
-            Logout
-          </Link>
-        </li>
+        <Link
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          to="/category"
+        >
+          Categories
+        </Link>
+
+        <Link
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          to="#"
+        >
+          Help
+        </Link>
       </>
     );
   };
 
   return (
-    <Popover className="relative bg-white">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
-        <div className="flex items-center justify-between border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1">
-            <a href="/">
-              <span className="text-3xl text-indigo-600 hover:text-indigo-500">
-                Gaming Gear
-              </span>
-            </a>
-          </div>
-          <div className="-my-2 -mr-2 md:hidden">
-            <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-              <span className="sr-only">Open menu</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </Popover.Button>
-          </div>
-          <Popover.Group as="nav" className="hidden space-x-10 md:flex">
-            <Popover className="relative">
-              {({ open }) => (
-                <>
-                  <Popover.Button
-                    className={classNames(
-                      open ? "text-gray-900" : "text-gray-500",
-                      "group inline-flex items-center rounded-md bg-white text-xl font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    )}
-                  >
-                    <span>Products</span>
-                    <ChevronDownIcon
-                      className={classNames(
-                        open ? "text-gray-600" : "text-gray-400",
-                        "ml-2 h-5 w-5 group-hover:text-gray-500"
-                      )}
-                      aria-hidden="true"
-                    />
-                  </Popover.Button>
-
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
-                  >
-                    <Popover.Panel className="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
-                      <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                        <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                          {solutions.map((item) => (
-                            <a
-                              key={item.name}
-                              href={item.href}
-                              className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                            >
-                              <item.icon
-                                className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                                aria-hidden="true"
-                              />
-                              <div className="ml-4">
-                                <p className="text-base font-medium text-gray-900">
-                                  {item.name}
-                                </p>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    </Popover.Panel>
-                  </Transition>
-                </>
-              )}
-            </Popover>
-            <Popover className="relative">
-              {({ open }) => (
-                <>
-                  <Popover.Button
-                    className={classNames(
-                      open ? "text-gray-900" : "text-gray-500",
-                      "group inline-flex items-center rounded-md bg-white text-xl font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    )}
-                  >
-                    <span>More</span>
-                    <ChevronDownIcon
-                      className={classNames(
-                        open ? "text-gray-600" : "text-gray-400",
-                        "ml-2 h-5 w-5 group-hover:text-gray-500"
-                      )}
-                      aria-hidden="true"
-                    />
-                  </Popover.Button>
-
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-200"
-                    enterFrom="opacity-0 translate-y-1"
-                    enterTo="opacity-100 translate-y-0"
-                    leave="transition ease-in duration-150"
-                    leaveFrom="opacity-100 translate-y-0"
-                    leaveTo="opacity-0 translate-y-1"
-                  >
-                    <Popover.Panel className="absolute left-1/2 z-10 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
-                      <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                        <div className="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                          {resources.map((item) => (
-                            <a
-                              key={item.name}
-                              href={item.href}
-                              className="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
-                            >
-                              <item.icon
-                                className="h-6 w-6 flex-shrink-0 text-indigo-600"
-                                aria-hidden="true"
-                              />
-                              <div className="ml-4">
-                                <p className="text-base font-medium text-gray-900">
-                                  {item.name}
-                                </p>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {item.description}
-                                </p>
-                              </div>
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                    </Popover.Panel>
-                  </Transition>
-                </>
-              )}
-            </Popover>
-          </Popover.Group>
-          <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
-            <a
-              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
-              href="/login"
-            >
-              Sign in
-            </a>
-            <a
-              className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-              href="/register"
-            >
-              Sign up
-            </a>
-            <a className="inline-flex text--600 text-3xl" href="/cart">
-              <ShoppingCartIcon
-                className="h-12 w-12 ml-10 hover:text-slate-700"
-                aria-hidden="true"
-              />{" "}
-              0
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <Transition
-        as={Fragment}
-        enter="duration-200 ease-out"
-        enterFrom="opacity-0 scale-95"
-        enterTo="opacity-100 scale-100"
-        leave="duration-100 ease-in"
-        leaveFrom="opacity-100 scale-100"
-        leaveTo="opacity-0 scale-95"
-      >
-        <Popover.Panel
-          focus
-          className="absolute inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden"
-        >
-          <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="px-5 pt-5 pb-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
-                  />
+    <Disclosure as="nav" className="bg-gray-800">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="relative flex h-16 items-center justify-between">
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                {/* Mobile menu button*/}
+                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center">
+                  <h2 className="text-gray-50 font-medium text-4xl">
+                    Gaming Gear
+                  </h2>
                 </div>
-                <div className="-mr-2">
-                  <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
-                    <span className="sr-only">Close menu</span>
-                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                  </Popover.Button>
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    {isAdmin ? (
+                      <a
+                        href="/"
+                        className="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
+                      >
+                        Products
+                      </a>
+                    ) : (
+                      <a
+                        href="/"
+                        className="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium"
+                      >
+                        Shop
+                      </a>
+                    )}
+                    {isAdmin && adminRouter()}
+                    {isLogged ? (
+                      loggedRouter()
+                    ) : (
+                      <a
+                        href="/login"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-xl font-medium"
+                      >
+                        Login ✥ Register
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
-              <div className="mt-6">
-                <nav className="grid gap-y-8">
-                  {solutions.map((item) => (
-                    <a
-                      key={item.name}
-                      href={item.href}
-                      className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                {isLogged ? (
+                  isAdmin ? (
+                    <h3 className="bg-gray-900 text-white px-3 py-2 rounded-md text-xl font-medium">
+                      Admin
+                    </h3>
+                  ) : (
+                    <Link
+                      to="/cart"
+                      className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white "
                     >
-                      <item.icon
-                        className="h-6 w-6 flex-shrink-0 text-indigo-600"
+                      <ShoppingCartIcon
+                        className="h-10 w-10 inline-flex"
                         aria-hidden="true"
-                      />
-                      <span className="ml-3 text-base font-medium text-gray-900">
-                        {item.name}
+                      ></ShoppingCartIcon>
+                      <span className="text-red-400 text-2xl bg-slate-700 font-medium rounded">
+                        {cart.length}
                       </span>
-                    </a>
-                  ))}
-                </nav>
+                    </Link>
+                  )
+                ) : (
+                  <></>
+                )}
+
+                {isLogged ? (
+                  <Menu as="div" className="relative ml-3">
+                    <div>
+                      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span className="sr-only">Open user menu</span>
+                        <img
+                          className="h-8 w-8 rounded-full"
+                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          alt=""
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/user"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
+                              )}
+                            >
+                              Your Profile
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/history"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
+                              )}
+                            >
+                              History
+                            </a>
+                          )}
+                        </Menu.Item>
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={logoutUser}
+                              href="/logout"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
-            <div className="space-y-6 py-6 px-5">
-              <div>
-                <a
-                  href="/login"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                >
-                  Sign up
-                </a>
-                <p className="mt-6 text-center text-base font-medium text-gray-500">
-                  Existing customer?{" "}
+          </div>
+
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pt-2 pb-3">
+              <Disclosure.Button className="w-full">
+                {isAdmin ? (
+                  <a
+                    href="/"
+                    className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Products
+                  </a>
+                ) : (
+                  <a
+                    href="/"
+                    className="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Shop
+                  </a>
+                )}
+                {isAdmin && adminRouter()}
+                {isLogged ? (
+                  loggedRouter()
+                ) : (
                   <a
                     href="/login"
-                    className="text-indigo-600 hover:text-indigo-500"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                   >
-                    Sign in
+                    Login ✥ Register
                   </a>
-                </p>
-              </div>
+                )}
+              </Disclosure.Button>
             </div>
-          </div>
-        </Popover.Panel>
-      </Transition>
-    </Popover>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
   );
 }

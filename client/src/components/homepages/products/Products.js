@@ -55,7 +55,12 @@ function Products() {
 
   const deleteAll = () => {
     products.forEach((product) => {
-      if (product.checked) deleteProduct(product._id, product.images.public_id);
+      if (product.checked) {
+        // eslint-disable-next-line no-restricted-globals
+        confirm("Delete all checked products?")
+          ? deleteProduct(product._id, product.images.public_id)
+          : alert("Cancle delete");
+      }
     });
   };
 
@@ -67,16 +72,35 @@ function Products() {
     );
   return (
     <>
-      {isAdmin && (
-        <div className="delete-all">
-          <span>Select all</span>
-          <input type="checkbox" checked={isCheck} onChange={checkAll} />
-          <button onClick={deleteAll}>Delete ALL</button>
-        </div>
-      )}
-
       <div className="bg-white">
-        <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="mx-auto max-w-2xl py-5 px-4 sm:py-5 sm:px-6 lg:max-w-7xl lg:px-8">
+          {isAdmin && (
+            <>
+              <div className="col-span-3 inline-flex sm:col-span-2 text-lg">
+                <label
+                  htmlFor="company-website"
+                  className="block font-medium text-gray-700"
+                >
+                  Select all:
+                </label>
+                <div className="w-40 flex rounded-md shadow-sm">
+                  <input
+                    type="checkbox"
+                    checked={isCheck}
+                    onChange={checkAll}
+                    className="inline-flex mt-1 ml-3 items-center rounded-l-md border border-gray-300 bg-gray-50 px-3  text-gray-500 w-6 h-6"
+                  />
+                  <button
+                    className="w-20 ml-4 inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 text-base font-medium text-white hover:bg-red-800"
+                    onClick={deleteAll}
+                  >
+                    Delete All
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+
           <Filters />
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Customers also purchased
