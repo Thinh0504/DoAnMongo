@@ -20,46 +20,46 @@ function Pages() {
 
   return (
     <Switch>
-      <Route path="/" exact component={Products} />
-      <Route path="/detail/:id" exact component={ProductDetails} />
+      <Route exact path="/" component={Products} />
+      <Route exact path="/detail/:id" component={ProductDetails} />
 
-      <Route path="/login" exact component={isLogged ? NotFound : Login} />
+      <Route exact path="/login" component={isLogged ? NotFound : Login} />
       <Route
-        path="/register"
         exact
+        path="/register"
         component={isLogged ? NotFound : Register}
       />
 
       <Route
-        path="/category"
         exact
+        path="/category"
         component={isAdmin ? Categories : NotFound}
       />
       <Route
-        path="/create_product"
         exact
+        path="/create_product"
         component={isAdmin ? CreateProducts : NotFound}
       />
       <Route
-        path="/edit_product/:id"
         exact
+        path="/edit_product/:id"
         component={isAdmin ? CreateProducts : NotFound}
       />
 
       <Route
-        path="/history"
         exact
+        path="/history"
         component={isLogged ? OrderHistory : NotFound}
       />
       <Route
-        path="/history/:id"
         exact
+        path="/history/:id"
         component={isLogged ? OrderDetails : NotFound}
       />
 
-      <Route path="/cart" exact component={Cart} />
+      <Route exact path="/cart" component={Cart} />
 
-      <Route path="*" exact component={NotFound} />
+      <Route exact path="*" component={NotFound} />
     </Switch>
   );
 }
