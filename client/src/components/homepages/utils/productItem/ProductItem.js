@@ -14,13 +14,15 @@ function ProductItem({ product, isAdmin, deleteProduct, handleCheck }) {
         </div>
         <div className="mt-4 flex justify-between">
           <div>
-            <h3 className="text-lg font-bold text-gray-700">
+            <h3 className="text-lg font-bold text-gray-900">
               <span aria-hidden="true" className="absolute inset-0" />
               {product.title}
             </h3>
-            <p className="mt-1 text-lg text-gray-500">{product.description}</p>
+            <p className="mt-1 text-lg text-zinc-50">{product.description}</p>
           </div>
-          <p className="text-xl font-medium text-red-500">{product.price}$</p>
+          <p className="text-xl font-medium text-white bg-red-800 px-3 h-8 rounded-md">
+            {product.price}$
+          </p>
         </div>
         <div className="mt-6 flex group relative">
           <BtnRender product={product} deleteProduct={deleteProduct} />

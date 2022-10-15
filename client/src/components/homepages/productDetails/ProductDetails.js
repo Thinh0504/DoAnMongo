@@ -23,7 +23,7 @@ function ProductDetails() {
   return (
     <>
       <div className="bg-white">
-        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           <div className="aspect-w-3 aspect-h-4 hidden overflow-hidden rounded-lg lg:block">
             <img
               src={detailProduct.images.url}
@@ -39,7 +39,7 @@ function ProductDetails() {
             </div>
             <div className="mt-4 lg:row-span-3 lg:mt-0">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl tracking-tight text-gray-900">
+              <p className="text-3xl tracking-tight text-red-600">
                 $ {detailProduct.price}
               </p>
               <Link
@@ -55,23 +55,25 @@ function ProductDetails() {
               <div>
                 <h3 className="sr-only">Description</h3>
                 <div className="space-y-6">
-                  <p className="text-base text-gray-900">
+                  <p className="text-lg text-gray-900">
                     {detailProduct.content}
                   </p>
                 </div>
               </div>
 
               <div className="mt-10">
-                <h3 className="text-sm font-medium text-gray-900">Sold</h3>
+                <h3 className="text-xl font-bold text-gray-900">Sold</h3>
 
-                <span className="text-gray-600">{detailProduct.sold}</span>
+                <span className="text-gray-600 text-lg">
+                  {detailProduct.sold}
+                </span>
               </div>
 
               <div className="mt-10">
-                <h2 className="text-sm font-medium text-gray-900">Details</h2>
+                <h2 className="text-xl font-bold text-gray-900">Details</h2>
 
                 <div className="mt-4 space-y-6">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-lg text-gray-600">
                     {detailProduct.description}
                   </p>
                 </div>
@@ -79,6 +81,12 @@ function ProductDetails() {
             </div>
           </div>
         </div>
+        <div class="hidden sm:block" aria-hidden="true">
+          <div class="py-5">
+            <div class="border-t border-gray-200"></div>
+          </div>
+        </div>
+
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             Related products

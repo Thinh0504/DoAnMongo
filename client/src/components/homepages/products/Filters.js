@@ -24,7 +24,7 @@ function Filters() {
       <div className="col-span-3 sm:col-span-2 text-lg">
         <label
           htmlFor="company-website"
-          className="block font-medium text-gray-700"
+          className="block font-medium text-gray-900"
         >
           Filters:
         </label>
@@ -48,7 +48,7 @@ function Filters() {
       <div className="col-span-3 sm:col-span-2 text-lg">
         <label
           htmlFor="company-website"
-          className="block font-medium text-gray-700"
+          className="block font-medium text-gray-900"
         >
           Search:
         </label>
@@ -66,7 +66,7 @@ function Filters() {
       <div className="col-span-3 sm:col-span-2 text-lg">
         <label
           htmlFor="company-website"
-          className="block font-medium text-gray-700"
+          className="block font-medium text-gray-900"
         >
           Sort by:
         </label>
