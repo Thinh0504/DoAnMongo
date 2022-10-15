@@ -13,6 +13,8 @@ import CreateProducts from "./products/CreateProducts";
 
 import { GlobalState } from "../../GlobalState";
 import ProductList from "./products/ProductList";
+import UserDetails from "./auth/UserDetails";
+import Loading from "./utils/loading/Loading";
 
 function Pages() {
   const state = useContext(GlobalState);
@@ -30,6 +32,7 @@ function Pages() {
         path="/register"
         component={isLogged ? NotFound : Register}
       />
+      <Route exact path="/user" component={isLogged ? UserDetails : Loading} />
 
       <Route
         exact

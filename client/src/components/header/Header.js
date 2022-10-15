@@ -10,13 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const navigation = [
-  { name: "Shop", href: "/", current: true },
-  { name: "Category", href: "/category", current: false },
-  { name: "About us", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -41,14 +34,14 @@ export default function Header() {
     return (
       <>
         <Link
-          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-xl font-medium"
           to="/product"
         >
           Product list
         </Link>
 
         <Link
-          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-xl font-medium"
           to="/category"
         >
           Category list
@@ -61,7 +54,7 @@ export default function Header() {
     return (
       <>
         <Link
-          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-xl font-medium"
           to="#"
         >
           About us
@@ -71,7 +64,10 @@ export default function Header() {
   };
 
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure
+      as="nav"
+      className="bg-white px-2 sm:px-4 dark:bg-gray-700 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600 shadow-slate-800 shadow-md"
+    >
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -135,13 +131,13 @@ export default function Header() {
                     <>
                       <Link
                         to="/cart"
-                        className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white "
+                        className="rounded-full bg-gray-700 p-1 text-gray-400 hover:text-white "
                       >
                         <ShoppingCartIcon
                           className="h-10 w-10 inline-flex"
                           aria-hidden="true"
                         ></ShoppingCartIcon>
-                        <span className="text-red-400 text-2xl px-2 bg-slate-700 font-medium rounded">
+                        <span className="text-red-400 text-2xl px-2 bg-slate-900 font-medium rounded">
                           {cart.length}
                         </span>
                       </Link>
@@ -161,7 +157,7 @@ export default function Header() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           className="h-8 w-8 rounded-full"
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                          src={user.avatar}
                           alt=""
                         />
                       </Menu.Button>
@@ -206,7 +202,7 @@ export default function Header() {
                           {({ active }) => (
                             <a
                               onClick={logoutUser}
-                              href="/logout"
+                              href="#"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-base text-gray-700"

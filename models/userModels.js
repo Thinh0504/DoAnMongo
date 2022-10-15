@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
@@ -16,6 +16,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    phonenumber: {
+      type: Number,
+      required: false,
+    },
+    address: {
+      type: String,
+      required: false,
+    },
     role: {
       type: Number,
       default: 0,
@@ -24,10 +32,14 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    avatar: {
+      type: Object,
+      required: false,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('Users', userSchema);
+module.exports = mongoose.model("Users", userSchema);

@@ -8,7 +8,41 @@ function Register() {
     name: "",
     email: "",
     password: "",
+    phonenumber: "",
+    address: "",
+    avatar: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [avatar, setAvatar] = useState(false);
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    try {
+      const file = e.target.files[0];
+      if (!file) return alert("File not exist.");
+      if (file.size > 1024 * 1024)
+        // 1mb
+        return alert("Size too large!");
+
+      if (file.type !== "image/jpeg" && file.type !== "image/png")
+        // 1mb
+        return alert("File format is incorrect.");
+
+      let formData = new FormData();
+      formData.append("file", file);
+
+      setLoading(true);
+      const res = await axios.post("/api/upload", formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+      setLoading(false);
+      setAvatar(res.data);
+    } catch (err) {
+      alert(err.response.data.msg);
+    }
+  };
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -17,8 +51,9 @@ function Register() {
 
   const registerSubmit = async (e) => {
     e.preventDefault();
+    if (!avatar) return alert("No Image Upload");
     try {
-      await axios.post("/user/register", { ...user });
+      await axios.post("/user/register", { ...user, avatar });
 
       localStorage.setItem("firstLogin", true);
 
@@ -29,7 +64,7 @@ function Register() {
   };
 
   return (
-    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 mt-4">
       <div className="w-full max-w-md space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
@@ -48,7 +83,7 @@ function Register() {
         <form className="mt-8 space-y-6" onSubmit={registerSubmit}>
           <input type="hidden" name="remember" defaultValue="true" />
           <div className="-space-y-px rounded-md shadow-sm text-xl">
-            <div className="mb-2">
+            <div className="">
               <label htmlFor="namefield" className="sr-only">
                 Name
               </label>
@@ -63,6 +98,7 @@ function Register() {
                 onChange={onChangeInput}
               />
             </div>
+
             <div className="mb-2">
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -73,7 +109,7 @@ function Register() {
                 name="email"
                 required
                 placeholder="Email"
-                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                 value={user.email}
                 onChange={onChangeInput}
               />
@@ -87,10 +123,51 @@ function Register() {
                 name="password"
                 type="password"
                 required
-                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
                 placeholder="Password"
                 value={user.password}
                 onChange={onChangeInput}
+              />
+            </div>
+
+            <div className="mt-2">
+              <label htmlFor="phone" className="sr-only">
+                Phone number
+              </label>
+              <input
+                id="phone"
+                name="phonenumber"
+                type="text"
+                className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                placeholder="Phonenumber"
+                value={user.phonenumber}
+                onChange={onChangeInput}
+              />
+            </div>
+            <div className="mb-1">
+              <label htmlFor="address" className="sr-only">
+                Address
+              </label>
+              <input
+                id="address"
+                name="address"
+                type="text"
+                className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                placeholder="Address"
+                value={user.address}
+                onChange={onChangeInput}
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="avatar" className="sr-only">
+                Avatar
+              </label>
+              <input
+                id="avatar"
+                name="avatar"
+                type="file"
+                className="relative block w-full appearance-none rounded-b-md rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500"
+                onChange={handleUpload}
               />
             </div>
           </div>

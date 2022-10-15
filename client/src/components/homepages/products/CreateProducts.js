@@ -139,7 +139,7 @@ function CreateProducts() {
     display: images ? "block" : "none",
   };
   return (
-    <div class="md:grid md:grid-cols-3 mt-6">
+    <div class="md:grid md:grid-cols-3 mt-20">
       <div class="md:col-span-1">
         <div class="ml-6 sm:px-0">
           <h3 class="text-2xl font-medium leading-6 text-gray-900">Product</h3>

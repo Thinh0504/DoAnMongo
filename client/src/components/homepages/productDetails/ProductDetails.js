@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { GlobalState } from "../../../GlobalState";
+import Footer from "../../footer/Footer";
+import Rating from "../rate/Rating";
 import ProductItem from "../utils/productItem/ProductItem";
 
 function ProductDetails() {
@@ -86,6 +88,15 @@ function ProductDetails() {
             <div class="border-t border-gray-200"></div>
           </div>
         </div>
+        <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+          <Rating />
+        </div>
+
+        <div class="hidden sm:block" aria-hidden="true">
+          <div class="py-5">
+            <div class="border-t border-gray-200"></div>
+          </div>
+        </div>
 
         <div className="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -100,6 +111,7 @@ function ProductDetails() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

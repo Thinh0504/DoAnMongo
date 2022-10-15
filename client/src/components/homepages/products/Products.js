@@ -6,6 +6,7 @@ import axios from "axios";
 import Filters from "./Filters";
 import Load from "./Load";
 import PromoSection from "../promo/PromoSection";
+import Footer from "../../footer/Footer";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -79,7 +80,7 @@ function Products() {
           <div class="border-t border-gray-200"></div>
         </div>
       </div>
-      <div className="bg-white">
+      <div className="bg-white mt-10 border border-t-1">
         <div className="mx-auto max-w-2xl py-5 px-4 sm:py-5 sm:px-6 lg:max-w-7xl lg:px-8">
           {isAdmin && (
             <>
@@ -135,6 +136,7 @@ function Products() {
 
       <Load />
       {products.length === 0 && <Loading />}
+      <Footer />
     </>
   );
 }

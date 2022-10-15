@@ -9,7 +9,7 @@ import image7 from "./promoImage/7.jpg";
 
 function PromoSection() {
   return (
-    <div className="relative overflow-hidden bg-white">
+    <div className="relative overflow-hidden bg-white top-16">
       <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
         <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div className="sm:max-w-lg">
@@ -90,7 +90,7 @@ function PromoSection() {
               </div>
 
               <a
-                href="#"
+                href="/"
                 className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700"
               >
                 Shop Collection

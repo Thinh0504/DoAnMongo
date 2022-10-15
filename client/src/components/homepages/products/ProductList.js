@@ -1,72 +1,26 @@
 import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import React, { useContext, useState } from "react";
 import { GlobalState } from "../../../GlobalState";
 
 function ProductList() {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
-  const [categories] = state.categoriesAPI.categories;
-  const [category, setCategory] = useState("");
-  const [token] = state.token;
-  const [callback, setCallback] = state.categoriesAPI.callback;
-  const [onEdit, setOnEdit] = useState(false);
-  const [id, setID] = useState("");
-
-  // const createCategory = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (onEdit) {
-  //       const res = await axios.put(
-  //         `/api/category/${id}`,
-  //         { name: category },
-  //         {
-  //           headers: { Authorization: token },
-  //         }
-  //       );
-  //       alert(res.data.msg);
-  //     } else {
-  //       const res = await axios.post(
-  //         "/api/category",
-  //         { name: category },
-  //         {
-  //           headers: { Authorization: token },
-  //         }
-  //       );
-  //       alert(res.data.msg);
-  //     }
-  //     setOnEdit(false);
-  //     setCategory("");
-  //     setCallback(!callback);
-  //   } catch (err) {
-  //     alert(err.response.data.msg);
-  //   }
-  // };
-
-  // const editCategory = async (id, name) => {
-  //   setID(id);
-  //   setCategory(name);
-  //   setOnEdit(true);
-  // };
-
-  // const deleteCategory = async (id) => {
-  //   try {
-  //     const res = await axios.delete(`/api/category/${id}`, {
-  //       headers: { Authorization: token },
-  //     });
-  //     alert(res.data.msg);
-  //     setCallback(!callback);
-  //   } catch (err) {
-  //     alert(err.response.data.msg);
-  //   }
-  // };
 
   return (
-    <div className="categories">
+    <div className="mt-20">
       <header className="bg-white shadow">
         <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+          <h1 className="inline-flex text-3xl font-bold tracking-tight text-gray-900">
             Products
           </h1>
+          <button className="ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-1 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <CheckBadgeIcon
+              className="-ml-1 mr-2 h-5 w-5 text-gray-500"
+              aria-hidden="true"
+            />
+            <a href="/create_product">Create Product</a>
+          </button>
         </div>
       </header>
       <main>
