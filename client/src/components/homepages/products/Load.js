@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { GlobalState } from "../../../GlobalState";
+import React, { useContext } from 'react';
+import { GlobalState } from '../../../GlobalState';
 
 function Load() {
   const state = useContext(GlobalState);
@@ -8,8 +8,8 @@ function Load() {
 
   return (
     <div className="load_more">
-      {result < page * 9 ? (
-        ""
+      {result < page * 8 ? (
+        ''
       ) : (
         <button onClick={() => setPage(page + 1)}>Load more</button>
       )}
