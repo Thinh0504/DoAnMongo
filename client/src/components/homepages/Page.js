@@ -26,44 +26,40 @@ function Pages() {
       <Route exact path="/" component={Products} />
       <Route exact path="/detail/:id" component={ProductDetails} />
 
-      <Route exact path="/login" component={isLogged ? NotFound : Login} />
-      <Route
-        exact
-        path="/register"
-        component={isLogged ? NotFound : Register}
-      />
+      <Route exact path="/login" component={isLogged ? Loading : Login} />
+      <Route exact path="/register" component={isLogged ? Loading : Register} />
       <Route exact path="/user" component={isLogged ? UserDetails : Loading} />
 
       <Route
         exact
         path="/category"
-        component={isAdmin ? Categories : NotFound}
+        component={isAdmin ? Categories : Loading}
       />
       <Route
         exact
         path="/create_product"
-        component={isAdmin ? CreateProducts : NotFound}
+        component={isAdmin ? CreateProducts : Loading}
       />
       <Route
         exact
         path="/product"
-        component={isAdmin ? ProductList : NotFound}
+        component={isAdmin ? ProductList : Loading}
       />
       <Route
         exact
         path="/edit_product/:id"
-        component={isAdmin ? CreateProducts : NotFound}
+        component={isAdmin ? CreateProducts : Loading}
       />
 
       <Route
         exact
         path="/history"
-        component={isLogged ? OrderHistory : NotFound}
+        component={isLogged ? OrderHistory : Loading}
       />
       <Route
         exact
         path="/history/:id"
-        component={isLogged ? OrderDetails : NotFound}
+        component={isLogged ? OrderDetails : Loading}
       />
 
       <Route exact path="/cart" component={Cart} />
