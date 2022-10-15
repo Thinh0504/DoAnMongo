@@ -12,6 +12,7 @@ import Categories from "./category/Categories";
 import CreateProducts from "./products/CreateProducts";
 
 import { GlobalState } from "../../GlobalState";
+import ProductList from "./products/ProductList";
 
 function Pages() {
   const state = useContext(GlobalState);
@@ -39,6 +40,11 @@ function Pages() {
         exact
         path="/create_product"
         component={isAdmin ? CreateProducts : NotFound}
+      />
+      <Route
+        exact
+        path="/product"
+        component={isAdmin ? ProductList : NotFound}
       />
       <Route
         exact

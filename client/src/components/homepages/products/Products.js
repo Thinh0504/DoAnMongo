@@ -5,6 +5,7 @@ import Loading from "../utils/loading/Loading";
 import axios from "axios";
 import Filters from "./Filters";
 import Load from "./Load";
+import PromoSection from "../promo/PromoSection";
 
 function Products() {
   const state = useContext(GlobalState);
@@ -72,7 +73,13 @@ function Products() {
     );
   return (
     <>
-      <div className="bg-slate-500">
+      <PromoSection />
+      <div class="hidden sm:block" aria-hidden="true">
+        <div class="py-5">
+          <div class="border-t border-gray-200"></div>
+        </div>
+      </div>
+      <div className="bg-white">
         <div className="mx-auto max-w-2xl py-5 px-4 sm:py-5 sm:px-6 lg:max-w-7xl lg:px-8">
           {isAdmin && (
             <>
@@ -102,8 +109,13 @@ function Products() {
           )}
 
           <Filters />
+          <div class="hidden sm:block" aria-hidden="true">
+            <div class="py-5">
+              <div class="border-t border-gray-200"></div>
+            </div>
+          </div>
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-            Customers also purchased
+            NEW ARRIVALS
           </h2>
           <div className="mt-2 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product) => {

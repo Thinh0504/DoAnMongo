@@ -13,7 +13,7 @@ import axios from "axios";
 const navigation = [
   { name: "Shop", href: "/", current: true },
   { name: "Category", href: "/category", current: false },
-  { name: "Help", href: "#", current: false },
+  { name: "About us", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
 
@@ -42,16 +42,16 @@ export default function Header() {
       <>
         <Link
           className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          to="/create_product"
+          to="/product"
         >
-          Add product
+          Product list
         </Link>
 
         <Link
           className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          to="/create_category"
+          to="/category"
         >
-          Add category
+          Category list
         </Link>
       </>
     );
@@ -62,16 +62,9 @@ export default function Header() {
       <>
         <Link
           className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          to="/category"
-        >
-          Categories
-        </Link>
-
-        <Link
-          className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           to="#"
         >
-          Help
+          About us
         </Link>
       </>
     );
@@ -96,7 +89,7 @@ export default function Header() {
               </div>
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex flex-shrink-0 items-center">
-                  <h2 className="text-gray-50 font-medium text-4xl">
+                  <h2 className="text-gray-50 font-medium text-4xl border border-slate-400 rounded-md px-2">
                     Gaming Gear
                   </h2>
                 </div>
@@ -117,7 +110,7 @@ export default function Header() {
                         Shop
                       </a>
                     )}
-                    {isAdmin && adminRouter()}
+
                     {isLogged ? (
                       loggedRouter()
                     ) : (
@@ -128,6 +121,7 @@ export default function Header() {
                         Login ✥ Register
                       </a>
                     )}
+                    {isAdmin && adminRouter()}
                   </div>
                 </div>
               </div>

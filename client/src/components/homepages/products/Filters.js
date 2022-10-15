@@ -21,11 +21,8 @@ function Filters() {
 
   return (
     <div className="grid grid-cols-3 mb-10">
-      <div className="col-span-3 sm:col-span-2 text-lg">
-        <label
-          htmlFor="company-website"
-          className="block font-medium text-gray-900"
-        >
+      <div className="col-span-3 sm:col-span-1 text-lg">
+        <label htmlFor="company-website" className=" font-medium text-gray-900">
           Filters:
         </label>
         <div className="mt-1 w-80 flex rounded-md shadow-sm">
@@ -45,7 +42,7 @@ function Filters() {
           </select>
         </div>
       </div>
-      <div className="col-span-3 sm:col-span-2 text-lg">
+      <div className="col-span-3 sm:col-span-1 text-lg">
         <label
           htmlFor="company-website"
           className="block font-medium text-gray-900"
@@ -63,7 +60,7 @@ function Filters() {
           />
         </div>
       </div>
-      <div className="col-span-3 sm:col-span-2 text-lg">
+      <div className="col-span-3 sm:col-span-1 text-lg">
         <label
           htmlFor="company-website"
           className="block font-medium text-gray-900"
