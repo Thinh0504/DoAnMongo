@@ -129,8 +129,8 @@ export default function Header() {
                     </h3>
                   ) : (
                     <>
-                      <Link
-                        to="/cart"
+                      <a
+                        href="/cart"
                         className="rounded-full bg-gray-700 p-1 text-gray-400 hover:text-white "
                       >
                         <ShoppingCartIcon
@@ -140,7 +140,7 @@ export default function Header() {
                         <span className="text-red-400 text-2xl px-2 bg-slate-900 font-medium rounded">
                           {cart.length}
                         </span>
-                      </Link>
+                      </a>
                       <h3 className="bg-gray-900 text-white px-3 border-slate-600 border py-2 ml-6 rounded-md text-xl font-medium">
                         {user.name}
                       </h3>
@@ -155,11 +155,19 @@ export default function Header() {
                     <div>
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src={user.avatar}
-                          alt=""
-                        />
+                        {user.avatar ? (
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src={user.avatar.url}
+                            alt=""
+                          />
+                        ) : (
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src="https://cdn-icons-png.flaticon.com/512/168/168726.png"
+                            alt=""
+                          />
+                        )}
                       </Menu.Button>
                     </div>
                     <Transition

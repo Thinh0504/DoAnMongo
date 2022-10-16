@@ -13,7 +13,20 @@ function UserDetails() {
     <div className="mt-20">
       <header className="bg-white shadow">
         <div class="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
-          <img class="w-20 h-20 rounded-full" src={userDetail.avatar} alt="" />
+          {userDetail.avatar ? (
+            <img
+              class="w-20 h-20 rounded-md"
+              src={userDetail.avatar.url}
+              alt=""
+            />
+          ) : (
+            <img
+              class="w-20 h-20 rounded-md"
+              src="https://cdn-icons-png.flaticon.com/512/168/168726.png"
+              alt=""
+            />
+          )}
+
           <div class="font-medium text-xl dark:text-black">
             <div>{userDetail.email}</div>
           </div>
@@ -79,11 +92,19 @@ function UserDetails() {
                 <dl>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <div class="max-w-7xl">
-                      <img
-                        class="w-20 h-20 rounded-full"
-                        src={userDetail.avatar}
-                        alt=""
-                      />
+                      {userDetail.avatar ? (
+                        <img
+                          class="w-20 h-20 rounded-md"
+                          src={userDetail.avatar.url}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          class="w-20 h-20 rounded-md"
+                          src="https://cdn-icons-png.flaticon.com/512/168/168726.png"
+                          alt=""
+                        />
+                      )}
                     </div>
                     <dd className="mt-1 text-lg text-gray-900 sm:col-span-2 sm:mt-0">
                       <button className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

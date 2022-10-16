@@ -5,7 +5,7 @@ function ProductItem({ product, isAdmin, deleteProduct, handleCheck }) {
   return (
     <>
       <div className="group relative">
-        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+        <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:scale-110 lg:aspect-none lg:h-80">
           <img
             src={product.images.url}
             alt="Gaming Gear"
