@@ -118,7 +118,7 @@ function Products() {
           <h2 className="text-2xl font-bold tracking-tight text-gray-900">
             NEW ARRIVALS
           </h2>
-          <div className="mt-2 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          <div className="mt-2 grid grid-cols-1 gap-y-4 gap-x-2 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-5">
             {products.map((product) => {
               return (
                 <ProductItem
