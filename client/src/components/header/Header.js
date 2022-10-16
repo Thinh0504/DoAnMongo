@@ -1,17 +1,17 @@
-import { GlobalState } from '../../GlobalState';
-import { Fragment, useContext, useState } from 'react';
-import { Popover, Transition, Disclosure, Menu } from '@headlessui/react';
+import { GlobalState } from "../../GlobalState";
+import { Fragment, useContext, useState } from "react";
+import { Popover, Transition, Disclosure, Menu } from "@headlessui/react";
 import {
   Bars3Icon,
   XMarkIcon,
   ShoppingCartIcon,
   BellIcon,
-} from '@heroicons/react/24/outline';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+} from "@heroicons/react/24/outline";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+  return classes.filter(Boolean).join(" ");
 }
 
 export default function Header() {
@@ -23,29 +23,29 @@ export default function Header() {
   const [menu, setMenu] = useState(false);
 
   const logoutUser = async () => {
-    await axios.get('/user/logout');
+    await axios.get("/user/logout");
 
-    localStorage.removeItem('firstLogin');
+    localStorage.removeItem("firstLogin");
 
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   const adminRouter = () => {
     return (
       <>
-        <Link
+        <a
           className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-xl font-medium"
-          to="/product"
+          href="/product"
         >
           Product list
-        </Link>
+        </a>
 
-        <Link
+        <a
           className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-xl font-medium"
-          to="/category"
+          href="/category"
         >
           Category list
-        </Link>
+        </a>
       </>
     );
   };
@@ -185,8 +185,8 @@ export default function Header() {
                             <a
                               href="/user"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-base text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
                               )}
                             >
                               Your Profile
@@ -198,8 +198,8 @@ export default function Header() {
                             <a
                               href="/history"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-base text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
                               )}
                             >
                               History
@@ -212,8 +212,8 @@ export default function Header() {
                               onClick={logoutUser}
                               href="#"
                               className={classNames(
-                                active ? 'bg-gray-100' : '',
-                                'block px-4 py-2 text-base text-gray-700'
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-base text-gray-700"
                               )}
                             >
                               Sign out

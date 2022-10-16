@@ -1,18 +1,19 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { GlobalState } from '../../../GlobalState';
-import Loading from '../utils/loading/Loading';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { GlobalState } from "../../../GlobalState";
+import Loading from "../utils/loading/Loading";
+import { useHistory, useParams } from "react-router-dom";
+import Load from "./Load";
 
 const initialState = {
-  product_id: '',
-  title: '',
+  product_id: "",
+  title: "",
   price: 500,
   description:
-    'BRL 458.20 in 12 interest-free installments or BRL 4,948.52 in cash',
-  content: 'Welcome to Gaming Gear',
-  category: '',
-  _id: '',
+    "BRL 458.20 in 12 interest-free installments or BRL 4,948.52 in cash",
+  content: "Welcome to Gaming Gear",
+  category: "",
+  _id: "",
 };
 
 function CreateProducts() {
@@ -54,23 +55,23 @@ function CreateProducts() {
       if (!isAdmin) return alert("You're not an admin");
       const file = e.target.files[0];
 
-      if (!file) return alert('File not exist.');
+      if (!file) return alert("File not exist.");
 
       if (file.size > 1024 * 1024)
         // 1mb
-        return alert('Size too large!');
+        return alert("Size too large!");
 
-      if (file.type !== 'image/jpeg' && file.type !== 'image/png')
+      if (file.type !== "image/jpeg" && file.type !== "image/png")
         // 1mb
-        return alert('File format is incorrect.');
+        return alert("File format is incorrect.");
 
       let formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post('/api/upload', formData, {
+      const res = await axios.post("/api/upload", formData, {
         headers: {
-          'content-type': 'multipart/form-data',
+          "content-type": "multipart/form-data",
           Authorization: token,
         },
       });
@@ -86,7 +87,7 @@ function CreateProducts() {
       if (!isAdmin) return alert("You're not an admin");
       setLoading(true);
       await axios.post(
-        '/api/destroy',
+        "/api/destroy",
         { public_id: images.public_id },
         {
           headers: { Authorization: token },
@@ -108,7 +109,7 @@ function CreateProducts() {
     e.preventDefault();
     try {
       if (!isAdmin) return alert("You're not an admin");
-      if (!images) return alert('No Image Upload');
+      if (!images) return alert("No Image Upload");
 
       if (onEdit) {
         await axios.put(
@@ -120,7 +121,7 @@ function CreateProducts() {
         );
       } else {
         await axios.post(
-          '/api/products',
+          "/api/products",
           { ...product, images },
           {
             headers: { Authorization: token },
@@ -128,14 +129,14 @@ function CreateProducts() {
         );
       }
       setCallback(!callback);
-      history.push('/');
+      history.push("/product");
     } catch (err) {
       alert(err.response.data.msg);
     }
   };
 
   const styleUpload = {
-    display: images ? 'block' : 'none',
+    display: images ? "block" : "none",
   };
   return (
     <div class="md:grid md:grid-cols-3 mt-20">
@@ -287,7 +288,7 @@ function CreateProducts() {
                     </svg>
                     <div class="flex text-xl text-gray-600">
                       {images ? (
-                        ''
+                        ""
                       ) : (
                         <label
                           for="file-upload"
@@ -307,7 +308,7 @@ function CreateProducts() {
                         <div>...</div>
                       ) : (
                         <div id="file_img" style={styleUpload}>
-                          <img src={images ? images.url : ''} alt="" />
+                          <img src={images ? images.url : ""} alt="" />
                           <button
                             onClick={handleDestroy}
                             className="mt-3 border-spacing-2 text-base"
@@ -316,10 +317,10 @@ function CreateProducts() {
                           </button>
                         </div>
                       )}
-                      {images ? '' : <p class="pl-1">or drag and drop</p>}
+                      {images ? "" : <p class="pl-1">or drag and drop</p>}
                     </div>
                     {images ? (
-                      ''
+                      ""
                     ) : (
                       <p class="text-xs text-gray-500">
                         PNG, JPG, GIF up to 10MB
@@ -334,7 +335,7 @@ function CreateProducts() {
                 type="submit"
                 class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-xl font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
-                {onEdit ? 'Update' : 'Create'}
+                {onEdit ? "Update" : "Create"}
               </button>
             </div>
           </div>

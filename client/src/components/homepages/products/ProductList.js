@@ -2,6 +2,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/20/solid";
 import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import React, { useContext, useState } from "react";
 import { GlobalState } from "../../../GlobalState";
+import Load from "./Load";
 
 function ProductList() {
   const state = useContext(GlobalState);
@@ -61,7 +62,9 @@ function ProductList() {
                 </dl>
               </div>
             </div>
+            <Load />
           </div>
+
           {/* /End replace */}
         </div>
       </main>
