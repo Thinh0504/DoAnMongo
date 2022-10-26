@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import axios from "axios";
+import PaypalButton from "./PaypalButton";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import { PayPalButton } from "react-paypal-button";
 
 const shippingFee = [
   { value: 50, name: "Standard shipping" },
@@ -14,6 +17,7 @@ function Cart() {
   const [token] = state.token;
   const [total, setTotal] = useState(0);
   const [user] = state.userAPI.user;
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
 
   useEffect(() => {
     const getTotal = () => {
@@ -72,9 +76,7 @@ function Cart() {
     }
   };
 
-  const tranSuccess = async (payment) => {
-    const { paymentID, address } = payment;
-
+  const tranSuccess = async (paymentID, address) => {
     await axios.post(
       "/api/payment",
       { cart, paymentID, address },
@@ -133,6 +135,12 @@ function Cart() {
         </div>
       </>
     );
+  const paypalOptions = {
+    "client-id":
+      "AfMl6Mabhsv0lAl8LEXqd4N9fdwnY7ubb7-GxG_G4N-rDuMzlz0FhtohTk6AWfrujRpT7PXxxbZ9KH52",
+    intent: "capture",
+    currency: "USD",
+  };
 
   return (
     <>
@@ -277,12 +285,27 @@ function Cart() {
                 <span>Total cost</span>
                 <span>${total}</span>
               </div>
-              <button
-                onClick={() => tranSuccess}
-                class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-base text-white uppercase w-full rounded-md"
-              >
-                Checkout
-              </button>
+
+              <PayPalScriptProvider options={paypalOptions}>
+                <PayPalButtons
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            value: `${total}`,
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={(data, actions) => {
+                    const paymentID = data.paymentID;
+                    const orderID = data.orderID;
+                    return tranSuccess(paymentID, orderID);
+                  }}
+                />
+              </PayPalScriptProvider>
             </div>
           </div>
         </div>
