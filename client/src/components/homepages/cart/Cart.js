@@ -1,9 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { GlobalState } from "../../../GlobalState";
 import axios from "axios";
-import PaypalButton from "./PaypalButton";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { PayPalButton } from "react-paypal-button";
 
 const shippingFee = [
   { value: 50, name: "Standard shipping" },
@@ -14,10 +12,10 @@ const shippingFee = [
 function Cart() {
   const state = useContext(GlobalState);
   const [cart, setCart] = state.userAPI.cart;
+  const [products, setProducts] = state.productsAPI.products;
   const [token] = state.token;
   const [total, setTotal] = useState(0);
   const [user] = state.userAPI.user;
-  const [paypalLoaded, setPaypalLoaded] = useState(false);
 
   useEffect(() => {
     const getTotal = () => {
@@ -141,6 +139,10 @@ function Cart() {
     intent: "capture",
     currency: "USD",
   };
+  const checkedSoftDeletedProducts = (id) => {
+    const getResult = products.find((product) => product._id === id);
+    return getResult === undefined ? true : false;
+  };
 
   return (
     <>
@@ -155,13 +157,13 @@ function Cart() {
               <h3 class="font-semibold text-gray-600 text-base uppercase w-2/5">
                 Product Details
               </h3>
-              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5 text-center">
+              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5">
                 Quantity
               </h3>
-              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5 text-center">
+              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5">
                 Price
               </h3>
-              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5 text-center">
+              <h3 class="font-semibold text-center text-gray-600 text-base uppercase w-1/5">
                 Total
               </h3>
             </div>
@@ -173,7 +175,6 @@ function Cart() {
                   </div>
                   <div class="flex flex-col justify-between ml-4 flex-grow">
                     <span class="font-bold text-sm">{product.title}</span>
-                    <span class="text-red-500 text-base"> </span>
                     <a
                       onClick={() => removeProduct(product._id)}
                       href="#"
@@ -181,31 +182,48 @@ function Cart() {
                     >
                       Remove
                     </a>
+                    {checkedSoftDeletedProducts(product._id) ? (
+                      <span class="text-red-500 text-base" id="unavailable">
+                        Out of stock
+                      </span>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </div>
                 <div class="flex justify-center w-1/5">
-                  <button onClick={() => decrement(product._id)}>
-                    <svg
-                      class="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                    </svg>
-                  </button>
-
-                  <input
-                    class="mx-2 border text-center w-8"
-                    type="text"
-                    value={product.quantity}
-                  />
-                  <button onClick={() => increment(product._id)}>
-                    <svg
-                      class="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                    </svg>
-                  </button>
+                  {checkedSoftDeletedProducts(product._id) ? (
+                    <input
+                      class="mx-2 border text-center w-8"
+                      type="text"
+                      value={product.quantity}
+                      readOnly
+                    />
+                  ) : (
+                    <>
+                      <button onClick={() => decrement(product._id)}>
+                        <svg
+                          class="fill-current text-gray-600 w-3"
+                          viewBox="0 0 448 512"
+                        >
+                          <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                        </svg>
+                      </button>
+                      <input
+                        class="mx-2 border text-center w-8"
+                        type="text"
+                        value={product.quantity}
+                      />
+                      <button onClick={() => increment(product._id)}>
+                        <svg
+                          class="fill-current text-gray-600 w-3"
+                          viewBox="0 0 448 512"
+                        >
+                          <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                        </svg>
+                      </button>
+                    </>
+                  )}
                 </div>
                 <span class="text-center w-1/5 font-semibold text-sm">
                   {product.price}
@@ -285,27 +303,35 @@ function Cart() {
                 <span>Total cost</span>
                 <span>${total}</span>
               </div>
-
-              <PayPalScriptProvider options={paypalOptions}>
-                <PayPalButtons
-                  createOrder={(data, actions) => {
-                    return actions.order.create({
-                      purchase_units: [
-                        {
-                          amount: {
-                            value: `${total}`,
+              {document.getElementById("unavailable") ? (
+                <button
+                  class="bg-red-900 font-semibold py-3 text-sm text-white uppercase w-full"
+                  disabled
+                >
+                  Delete unavailable products to checkout
+                </button>
+              ) : (
+                <PayPalScriptProvider options={paypalOptions}>
+                  <PayPalButtons
+                    createOrder={(data, actions) => {
+                      return actions.order.create({
+                        purchase_units: [
+                          {
+                            amount: {
+                              value: `${total}`,
+                            },
                           },
-                        },
-                      ],
-                    });
-                  }}
-                  onApprove={(data, actions) => {
-                    const paymentID = data.paymentID;
-                    const orderID = data.orderID;
-                    return tranSuccess(paymentID, orderID);
-                  }}
-                />
-              </PayPalScriptProvider>
+                        ],
+                      });
+                    }}
+                    onApprove={(data, actions) => {
+                      const paymentID = data.paymentID;
+                      const orderID = data.orderID;
+                      return tranSuccess(paymentID, orderID);
+                    }}
+                  />
+                </PayPalScriptProvider>
+              )}
             </div>
           </div>
         </div>

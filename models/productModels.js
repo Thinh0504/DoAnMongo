@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 
 const productSchema = new mongoose.Schema(
   {
@@ -42,10 +43,17 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    inStock: {
+      type: Boolean,
+      default: 1,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model('Products', productSchema);
+productSchema.plugin(mongooseDelete, {
+  overrideMethods: ["find", "findOne", "findOneAndUpdate"],
+});
+module.exports = mongoose.model("Products", productSchema);

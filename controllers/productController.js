@@ -1,4 +1,4 @@
-const Products = require('../models/productModels.js');
+const Products = require("../models/productModels.js");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -10,7 +10,7 @@ class APIfeatures {
     const queryObj = { ...this.queryString };
     //console.log({ before: queryObj });
 
-    const excludedFields = ['page', 'sort', 'limit'];
+    const excludedFields = ["page", "sort", "limit"];
     excludedFields.forEach((element) => delete queryObj[element]);
     //console.log({ after: queryObj });
 
@@ -31,10 +31,10 @@ class APIfeatures {
   }
   sorting() {
     if (this.queryString.sort) {
-      const sortBy = this.queryString.sort.split(',').join(' ');
+      const sortBy = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sortBy);
     } else {
-      this.query = this.query.sort('-createAt');
+      this.query = this.query.sort("-createAt");
     }
     return this;
   }
@@ -56,7 +56,7 @@ const productController = {
         .paginating();
       const products = await features.query;
       res.json({
-        status: 'success',
+        status: "success",
         result: products.length,
         products: products,
       });
@@ -76,10 +76,10 @@ const productController = {
         category,
       } = req.body;
 
-      if (!images) return res.status(400).json({ msg: 'No image upload.' });
+      if (!images) return res.status(400).json({ msg: "No image upload." });
       const product = await Products.findOne({ product_id });
       if (product)
-        return res.status(400).json({ msg: 'This product already exists.' });
+        return res.status(400).json({ msg: "This product already exists." });
       const newProduct = new Products({
         product_id,
         title: title.toLowerCase(),
@@ -90,16 +90,16 @@ const productController = {
         category,
       });
       await newProduct.save();
-      res.json({ msg: 'Create product' });
+      res.json({ msg: "Create product" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
   deleteProduct: async (req, res) => {
     try {
-      await Products.findByIdAndDelete(req.params.id);
+      await Products.deleteById(req.params.id);
 
-      res.json({ msg: 'Delete a product' });
+      res.json({ msg: "Delete a product" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -107,7 +107,7 @@ const productController = {
   updateProduct: async (req, res) => {
     try {
       const { title, price, description, content, images, category } = req.body;
-      if (!images) return res.status(400).json({ msg: 'No image upload.' });
+      if (!images) return res.status(400).json({ msg: "No image upload." });
       await Products.findOneAndUpdate(
         { _id: req.params.id },
         {
@@ -120,7 +120,7 @@ const productController = {
         }
       );
 
-      res.json({ msg: 'Update product.' });
+      res.json({ msg: "Update product." });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
