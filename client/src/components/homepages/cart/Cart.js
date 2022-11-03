@@ -1,12 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { GlobalState } from "../../../GlobalState";
-import axios from "axios";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import React, { useContext, useState, useEffect } from 'react';
+import { GlobalState } from '../../../GlobalState';
+import axios from 'axios';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
 const shippingFee = [
-  { value: 50, name: "Standard shipping" },
-  { value: 70, name: "Domestical shipping" },
-  { value: 100, name: "Foreign country shipping" },
+  { value: 50, name: 'Standard shipping' },
+  { value: 70, name: 'Domestical shipping' },
+  { value: 100, name: 'Foreign country shipping' },
 ];
 
 function Cart() {
@@ -31,7 +31,7 @@ function Cart() {
 
   const addToCart = async (cart) => {
     await axios.patch(
-      "/user/addcart",
+      '/user/addcart',
       { cart },
       {
         headers: { Authorization: token },
@@ -62,7 +62,7 @@ function Cart() {
   };
 
   const removeProduct = (id) => {
-    if (window.confirm("Do you want to delete this product?")) {
+    if (window.confirm('Do you want to delete this product?')) {
       cart.forEach((item, index) => {
         if (item._id === id) {
           cart.splice(index, 1);
@@ -76,7 +76,7 @@ function Cart() {
 
   const tranSuccess = async (paymentID, address) => {
     await axios.post(
-      "/api/payment",
+      '/api/payment',
       { cart, paymentID, address },
       {
         headers: { Authorization: token },
@@ -85,7 +85,7 @@ function Cart() {
 
     setCart([]);
     addToCart([]);
-    alert("You have successfully placed an order.");
+    alert('You have successfully placed an order.');
   };
 
   if (cart.length === 0)
@@ -134,10 +134,10 @@ function Cart() {
       </>
     );
   const paypalOptions = {
-    "client-id":
-      "AfMl6Mabhsv0lAl8LEXqd4N9fdwnY7ubb7-GxG_G4N-rDuMzlz0FhtohTk6AWfrujRpT7PXxxbZ9KH52",
-    intent: "capture",
-    currency: "USD",
+    'client-id':
+      'AfMl6Mabhsv0lAl8LEXqd4N9fdwnY7ubb7-GxG_G4N-rDuMzlz0FhtohTk6AWfrujRpT7PXxxbZ9KH52',
+    intent: 'capture',
+    currency: 'USD',
   };
   const checkedSoftDeletedProducts = (id) => {
     const getResult = products.find((product) => product._id === id);
@@ -303,7 +303,7 @@ function Cart() {
                 <span>Total cost</span>
                 <span>${total}</span>
               </div>
-              {document.getElementById("unavailable") ? (
+              {document.getElementById('unavailable') ? (
                 <button
                   class="bg-red-900 font-semibold py-3 text-sm text-white uppercase w-full"
                   disabled
@@ -314,20 +314,34 @@ function Cart() {
                 <PayPalScriptProvider options={paypalOptions}>
                   <PayPalButtons
                     createOrder={(data, actions) => {
-                      return actions.order.create({
-                        purchase_units: [
-                          {
-                            amount: {
-                              value: `${total}`,
+                      return actions.order
+                        .create({
+                          purchase_units: [
+                            {
+                              amount: {
+                                value: `${total}`,
+                              },
                             },
-                          },
-                        ],
-                      });
+                          ],
+                        })
+                        .then((orderId) => {
+                          return orderId;
+                        });
                     }}
-                    onApprove={(data, actions) => {
-                      const paymentID = data.paymentID;
-                      const orderID = data.orderID;
-                      return tranSuccess(paymentID, orderID);
+                    onApprove={async (orderId, actions) => {
+                      return actions.order.capture().then(function (details) {
+                        axios.post(
+                          '/api/payment',
+                          { cart, orderId },
+                          {
+                            headers: { Authorization: token },
+                          }
+                        );
+
+                        setCart([]);
+                        addToCart([]);
+                        alert('You have successfully placed an order.');
+                      });
                     }}
                   />
                 </PayPalScriptProvider>

@@ -1,9 +1,9 @@
-import React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import { DataProvider } from "./GlobalState";
-import Header from "./components/header/Header";
-import MainPage from "./components/homepages/Page";
-import Footer from "./components/footer/Footer";
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { DataProvider } from './GlobalState';
+import Header from './components/header/Header';
+import MainPage from './components/homepages/Page';
+import Footer from './components/footer/Footer';
 
 function App() {
   return (
