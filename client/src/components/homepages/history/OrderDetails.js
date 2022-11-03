@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { GlobalState } from "../../../GlobalState";
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { GlobalState } from '../../../GlobalState';
 
 function OrderDetails() {
   const state = useContext(GlobalState);
@@ -34,7 +34,7 @@ function OrderDetails() {
           <tr>
             <td>{orderDetails.address.recipient_name}</td>
             <td>
-              {orderDetails.address.line1 + " - " + orderDetails.address.city}
+              {orderDetails.address.line1 + ' - ' + orderDetails.address.city}
             </td>
             <td>{orderDetails.address.postal_code}</td>
             <td>{orderDetails.address.country_code}</td>
@@ -42,7 +42,7 @@ function OrderDetails() {
         </tbody>
       </table>
 
-      <table style={{ margin: "30px 0px" }}>
+      <table style={{ margin: '30px 0px' }}>
         <thead>
           <tr>
             <th></th>
